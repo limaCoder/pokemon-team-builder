@@ -1,0 +1,121 @@
+.mainContainer {
+  padding: 26px 40px;
+}
+
+.section {
+  max-width: 35rem;
+  margin: 0 auto;
+}
+
+.sectionTitle {
+  display: flex;
+  gap: 10px;
+
+  h2 {
+    @include section-title();
+  }
+
+  .sectionTitleIcon {
+    color: $black;
+  }
+
+}
+
+.pokemonTeam {
+  padding: 9px 0 40px 0;
+
+  .pokemonTeamRow {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding-bottom: 25px;
+  }
+
+  .pokemonTeamRow:nth-of-type(2) {
+    margin-left: 5rem;
+  }
+
+  .pokemonTeamItem {
+    display: flex;
+    flex-direction: column;
+  
+    img {
+      min-width: 150px;
+    }
+  
+    img:nth-of-type(2) {
+      margin-top: 6px;
+    }
+  }
+
+  .teamOptions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 13px;
+    font-size: 15px;
+    color: $white;
+
+    .teamOptionsIcon {
+    }
+    
+    .trashIcon {
+      background-color: $red-error;
+      border-radius: 100px;
+      padding: 13px;
+      display: flex;
+      align-items: center;
+    }
+
+    .checkIcon {
+      background-color: $green-sucess;
+      border-radius: 100px;
+      padding: 13px;
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+
+.pokemons {
+  padding: 9px 0 40px 0;
+
+  .pokemonsRow {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    padding-bottom: 25px;
+
+    .pokemonItem {    
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .pokemonId {
+        background-color: $blue-light;
+        border-radius: 100px;
+        color: $white;
+        padding: 10px;
+        margin: auto 0;
+        align-self: flex-start;
+      }
+
+      img {
+        width: 7rem;
+      }
+
+      h3 {
+        @include pokemon-name();
+      }
+
+      .pokemonBar {
+        background-color: #F4CB38;
+        width: 50%;
+        height: 3px;
+        align-self: flex-start;
+        margin-top: 8px;
+      }
+    }
+  }
+}
