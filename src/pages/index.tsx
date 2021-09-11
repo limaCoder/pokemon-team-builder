@@ -30,24 +30,36 @@ export default function Home() {
     api.get(`/pokemon?limit=${5}`) // limitando a busca para 5
     .then(response => setPokemonsName(response.data.results))
   }
-  
+   
   // função para chamar cada pokemon no endpoint /pokemon/${nomeDoPokemon}
   // usando os nomes que estão no estado de pokemonsName como argumento e
   // armazenando cada pokemon no estado de pokemons 
   function loadPokemons() {
     loadPokemonsNames();
+    
+    let newPokemons: any = []
 
     for (const pokemonName of pokemonsName) {
       api.get(`/pokemon/${pokemonName.name}`)
-        .then(response => setPokemons(response.data))
-    }    
+        .then(response => newPokemons.push(response.data))
+        console.log(pokemons)
+    }
+
+    console.log(newPokemons)
+    setPokemons(newPokemons)
+  }
+    
+  function testPokemons(){
+    pokemons.map(pokemon => {
+      console.log(pokemon)
+    })
   }
   
   useEffect( () =>  {
     loadPokemons();
+    testPokemons();
   }, [])
     
-  console.log(pokemons)   
     
   return (
     <>
@@ -109,9 +121,7 @@ export default function Home() {
 
           <div className={styles.pokemons}>
             <div className={styles.pokemonsRow}>
-              {/* pokemons retornou como objeto, e para dar um map no objeto foi
-              usado o Object.entries */}
-              {Object.entries(pokemons).map(([key, pokemon], i) => (
+              {pokemons.map(pokemon => (
                 <div key={pokemon.id} className={styles.pokemonItem}>
                   <div className={styles.pokemonId}>{pokemon.id}</div>
                   <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`}  alt="" />
