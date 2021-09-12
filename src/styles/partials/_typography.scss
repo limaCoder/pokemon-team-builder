@@ -18,6 +18,7 @@
 @mixin pokemon-name() {
   color: $black;
   font-weight: 700;
+  text-transform: capitalize;
   font-size: 16px; 
 
   @content;
