@@ -1,0 +1,23 @@
+.teamOptions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 13px;
+  font-size: 15px;
+  color: $white;
+  
+  .trashIcon {
+    background-color: $red-error;
+    border-radius: 100px;
+    padding: 13px;
+    display: flex;
+    align-items: center;
+  }
+
+  .checkIcon {
+    background-color: $green-sucess;
+    border-radius: 100px;
+    padding: 13px;
+    display: flex;
+    align-items: center;
+  }
+}

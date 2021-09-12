@@ -18,81 +18,6 @@
   .sectionTitleIcon {
     color: $black;
   }
-
-}
-
-.pokemonTeam {
-  padding: 9px 0 40px 0;
-
-  .pokemonTeamRow {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    padding-bottom: 25px;
-  }
-
-  .pokemonTeamRow:nth-of-type(2) {
-    margin-left: 5rem;
-  }
-  
-  @media screen and (max-width: 600px) {
-    .pokemonTeamRow {
-      flex-wrap: wrap;
-    }
-
-    .pokemonTeamRow:nth-of-type(2) {
-      margin-left: 0rem;
-    }
-  }
-
-  .pokemonTeamItem {
-    
-    .pokemonTeamPokeball {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-    }
-  
-    img {
-      min-width: 150px;
-    }
-  
-    img:nth-of-type(2) {
-      margin-top: 6px;
-    }
-
-    .pokemonInTeamPokeballImage {
-      max-width: 50px;
-    }
-
-    .pokemonInTeamPokeball {
-      position: absolute;
-    }
-  }
-
-  .teamOptions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 13px;
-    font-size: 15px;
-    color: $white;
-    
-    .trashIcon {
-      background-color: $red-error;
-      border-radius: 100px;
-      padding: 13px;
-      display: flex;
-      align-items: center;
-    }
-
-    .checkIcon {
-      background-color: $green-sucess;
-      border-radius: 100px;
-      padding: 13px;
-      display: flex;
-      align-items: center;
-    }
-  }
 }
 
 .pokemons {
@@ -105,44 +30,17 @@
     justify-content: center;
     gap: 30px;
     padding-bottom: 25px;
+  }
+}
 
-    .pokemonItem {
-      cursor: pointer;    
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+.pokemonTeam {
+  padding: 9px 0 40px 0;
 
-      .pokemonId {
-        background-color: $blue-light;
-        border-radius: 100px;
-        color: $white;
-        min-height: 36px;
-        min-width: 36px;
-        align-self: flex-start;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      img {
-        width: 7rem;
-      }
-
-      h3 {
-        @include pokemon-name();
-      }
-
-      .pokemonBar {
-        background-color: #F4CB38;
-        width: 50%;
-        height: 3px;
-        align-self: flex-start;
-        margin-top: 8px;
-      }
-
-      .pokemonBarColor {
-
-      }
-    }
+  .pokemonTeamRow {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    padding-bottom: 25px;
   }
 }

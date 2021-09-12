@@ -1,15 +1,19 @@
-import { useEffect, useState } from 'react';
-import api from '../services/api';
+import Head from "next/head";
+import { useEffect, useState } from "react";
 
-import Head from 'next/head';
+import { PokemonItem } from "../components/PokemonItem";
+import { PokemonTeam } from "../components/PokemonTeam";
+import { TeamOptions } from "../components/TeamOptions";
 
-import { FaPen, FaTrash, FaCheck } from 'react-icons/fa';
+import api from "../services/api";
 
-import styles from './teams.module.scss';
+import { FaPen } from "react-icons/fa";
+import styles from "./teams.module.scss";
+
 interface PokemonInterface {
-  id: string;
+  id: number;
   name: string;
-  sprite: string;
+  onAddPokemonToTheTeam: (pokemon: any) => void;
 }
 
 export default function Home() {
@@ -17,39 +21,51 @@ export default function Home() {
   const [pokemons, setPokemons] = useState<PokemonInterface[]>([]);
 
   // estado para armazenar equipes de pokemons
-  const [pokemonsTeam, setPokemonsTeam] = useState([]);
-   
+  const [pokemonsTeam, setPokemonsTeam] = useState<PokemonInterface[]>([]);
+
   // ordenando os pokemons
-  const OrderPokemons = (pokemons: any) => pokemons.sort((pokemonA: any, pokemonB: any) => (pokemonA.id > pokemonB.id) ? 1 : -1);
-  
+  const OrderPokemons = (pokemons: any) =>
+    pokemons.sort((pokemonA: any, pokemonB: any) =>
+      pokemonA.id > pokemonB.id ? 1 : -1
+    );
+
+
   // função para chamar cada pokemon no endpoint /pokemon/${nomeDoPokemon}
   // usando os nomes que estão no estado de pokemonsName como argumento e
-  // armazenando cada pokemon no estado de pokemons 
+  // armazenando cada pokemon no estado de pokemons
   async function loadPokemons() {
     const pokemonsNames = await api
       .get(`/pokemon`)
-      .then(response => response.data.results);
+      .then((response) => response.data.results);
 
     for (const pokemonName of pokemonsNames) {
-      await api.get(`/pokemon/${pokemonName.name}`)
-      .then(response => setPokemons(oldState => [...oldState, response.data]))
+      await api
+        .get(`/pokemon/${pokemonName.name}`)
+        .then((response) =>
+          setPokemons((oldState) => [...oldState, response.data])
+        );
 
       // ordenando os pokemons
-      await OrderPokemons(pokemons)
+      await OrderPokemons(pokemons);
     }
   }
-  
-  useEffect( () =>  {
+
+  useEffect(() => {
     loadPokemons();
-  }, [])
+  }, []);
 
-  function addPokemonsToTheTeam(event: any) {
-    event.preventDefault();
+  function addPokemonsToTheTeam(pokemon: any) {
+    /* setToogle((pokemonClick) => !pokemonClick); */
 
-    setPokemonsTeam(event.currentTarget)
+    if (pokemonsTeam.length >= 6) return;
+
+    setPokemonsTeam([...pokemonsTeam, pokemon]);
     console.log(pokemonsTeam)
   }
-    
+
+  let group = Array.from({ length: 6 });
+
+
   return (
     <>
       <Head>
@@ -65,82 +81,14 @@ export default function Home() {
 
           <div className={styles.pokemonTeam}>
             <div className={styles.pokemonTeamRow}>
-              { pokemonsTeam ? ( 
-                <div className={styles.pokemonTeamItem}>
-                  <div className={styles.pokemonTeamPokeball}>
-                    <img src="pokeball-background-top.svg"  alt="" />
-                    <img src="pokeball-background-bottom.svg" alt="" />
-
-                    <div className={styles.pokemonInTeamPokeball}>
-                      <img className={styles.pokemonInTeamPokeballImage} src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png' alt="" />
-                    </div>
-                  </div>
-                </div> ) : (
-                
-                <div className={styles.pokemonTeamItem}>
-                  <img src="pokeball-background-top.svg"  alt="" />
-                  <img src="pokeball-background-bottom.svg" alt="" />
-                </div>
-              )}
-              { pokemonsTeam ? ( 
-                <div className={styles.pokemonTeamItem}>
-                  <div className={styles.pokemonTeamPokeball}>
-                    <img src="pokeball-background-top.svg"  alt="" />
-                    <img src="pokeball-background-bottom.svg" alt="" />
-
-                    <div className={styles.pokemonInTeamPokeball}>
-                      <img className={styles.pokemonInTeamPokeballImage} src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png' alt="" />
-                    </div>
-                  </div>
-                </div> ) : (
-                
-                <div className={styles.pokemonTeamItem}>
-                  <img src="pokeball-background-top.svg"  alt="" />
-                  <img src="pokeball-background-bottom.svg" alt="" />
-                </div>
-              )}
-              { pokemonsTeam ? ( 
-                <div className={styles.pokemonTeamItem}>
-                  <div className={styles.pokemonTeamPokeball}>
-                    <img src="pokeball-background-top.svg"  alt="" />
-                    <img src="pokeball-background-bottom.svg" alt="" />
-
-                    <div className={styles.pokemonInTeamPokeball}>
-                      <img className={styles.pokemonInTeamPokeballImage} src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png' alt="" />
-                    </div>
-                  </div>
-                </div> ) : (
-                
-                <div className={styles.pokemonTeamItem}>
-                  <img src="pokeball-background-top.svg"  alt="" />
-                  <img src="pokeball-background-bottom.svg" alt="" />
-                </div>
-              )}
-
-              
+              {group.map((pokemonGroup, index) => (
+                <PokemonTeam
+                  index={pokemonsTeam[index]}
+                  id={pokemonsTeam[index] ? pokemonsTeam[index].id : 0}
+                />
+              ))}
             </div>
-            <div className={styles.pokemonTeamRow}>
-              <div className={styles.pokemonTeamItem}>
-                <img src="pokeball-background-top.svg"  alt="" />
-                <img src="pokeball-background-bottom.svg" alt="" />
-              </div>
-              <div className={styles.pokemonTeamItem}>
-                <img src="pokeball-background-top.svg"  alt="" />
-                <img src="pokeball-background-bottom.svg" alt="" />
-              </div>
-              <div className={styles.pokemonTeamItem}>
-                <img src="pokeball-background-top.svg"  alt="" />
-                <img src="pokeball-background-bottom.svg" alt="" />
-              </div>
-            </div>
-            <div className={styles.teamOptions}>
-              <div className={styles.trashIcon}>
-                <FaTrash size={26} />
-              </div>
-              <div className={styles.checkIcon}>
-                <FaCheck size={26} />
-              </div>
-            </div>
+            <TeamOptions />
           </div>
         </section>
 
@@ -151,18 +99,17 @@ export default function Home() {
 
           <div className={styles.pokemons}>
             <div className={styles.pokemonsRow}>
-              {pokemons.map(pokemon => (
-                <div onClick={addPokemonsToTheTeam} key={pokemon.id} className={styles.pokemonItem}>
-                  <div className={styles.pokemonId}><span>{pokemon.id}</span></div>
-                  <img src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`}  alt="" />
-                  <h3>{pokemon.name}</h3>
-                  <div className={`${styles.pokemonBar} ${styles.pokemonBarColor}`}></div>
-                </div>
+              {pokemons.map((pokemon) => (
+                <PokemonItem
+                  id={pokemon.id}
+                  name={pokemon.name}
+                  onAddPokemonToTheTeam={() => addPokemonsToTheTeam(pokemon)}
+                />
               ))}
             </div>
           </div>
         </section>
       </main>
     </>
-  )
+  );
 }
