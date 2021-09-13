@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import api from "../../services/api";
+import { useState } from "react";
 
 import styles from "./styles.module.scss";
 import { FaCheck } from "react-icons/fa";
@@ -8,20 +7,28 @@ interface PokemonItemInterface {
   onAddPokemonToTheTeam: () => void;
   id: number;
   name: string;
+  pokemonTeam: any;
+  pokemonType: string;
 }
 
-export function PokemonItem({ id, name, onAddPokemonToTheTeam }: PokemonItemInterface) {
+export function PokemonItem({ id, name, pokemonTeam, onAddPokemonToTheTeam, pokemonType }: PokemonItemInterface) {
   // estado para armezenar o display do checked do pokemon escolhido
-  const [toogle, setToogle] = useState(true);
-  const [pokemonChoosed, setPokemonChoosed] = useState("none");
+  const [toogle, setToogle] = useState(false);
 
-  useEffect(() => {
-    setPokemonChoosed((state) => (toogle ? "none" : "block"));
-  }, [toogle]);
+  const handleClickPokemon = () => {
+    if(pokemonTeam.length <= 6) {
+      setToogle(true)
+    } else {
+      setToogle(false)
+    }
+
+    onAddPokemonToTheTeam()
+    console.log(pokemonTeam)
+  }
 
   return (
     <div
-      onClick={onAddPokemonToTheTeam}
+      onClick={handleClickPokemon}
       key={id}
       className={styles.pokemonItem}
     >
@@ -33,8 +40,8 @@ export function PokemonItem({ id, name, onAddPokemonToTheTeam }: PokemonItemInte
         alt=""
       />
       <h3>{name}</h3>
-      <div className={`${styles.pokemonBar} ${styles.pokemonBarColor}`}></div>
-      <div style={{ display: pokemonChoosed}} className={styles.checkIcon}>
+      <div className={`${styles.pokemonBar} ${pokemonType} ${styles.pokemonType}`}></div>
+      <div style={{ display: toogle ? 'block' : 'none'}} className={styles.checkIcon}>
         <FaCheck size={26} />
       </div>
     </div>

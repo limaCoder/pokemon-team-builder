@@ -4,6 +4,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  transition: .5s ease;
+
+  &:hover {
+    filter: opacity(0.5);
+  }
 
   .pokemonId {
     background-color: $blue-light;
@@ -26,7 +31,6 @@
   }
 
   .pokemonBar {
-    background-color: #f4cb38;
     width: 50%;
     height: 3px;
     align-self: flex-start;

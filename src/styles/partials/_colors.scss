@@ -8,22 +8,210 @@ $blue-light: #90ADC6;
 $green-sucess: #8FDA58;
 $red-error: #F8635A;
 
-/* Pokémon types colors */
-$pokemon-type-bug: #89960B;
-$pokemon-type-fairy: #DA93DD;
-$pokemon-type-ghost: #AD6EEC;
-$pokemon-type-normal: #C3C0B8;
-$pokemon-type-steel: #8F8E9E;
-$pokemon-type-ice: #9BDEFB;
-$pokemon-type-dark: #322C26;
-$pokemon-type-fighting: #80311D;
-$pokemon-type-grass: #68BB2B;
-$pokemon-type-poison: #924694;
-$pokemon-type-water: #5CC1ED;
-$pokemon-type-flying: #5D74D5;
-$pokemon-type-dragon: #6B57D2;
-$pokemon-type-fire: #EC5D35;
-$pokemon-type-ground: #D0B155;
-$pokemon-type-psychic: #DA3063;
-$pokemon-type-eletric: #F4CB38;
-$pokemon-type-rock: #9D853C;
+/* Pokemons types classes */
+.bug {
+  background-color: #89960B;
+}
+
+svg.bug {
+  background-color: transparent;
+
+  path {
+    fill: #89960B;
+  }
+}
+
+
+.fairy {
+  background-color: #DA93DD;
+}
+
+svg.fairy {
+  background-color: transparent;
+
+  path {
+    fill: #DA93DD;
+  }
+}
+
+
+.ghost {
+  background-color: #AD6EEC;
+}
+
+svg.ghost {
+  background-color: transparent;
+
+  path {
+    fill: #AD6EEC;
+  }
+}
+
+
+.normal {
+  background-color: #C3C0B8;
+}
+
+svg.normal {
+  background-color: transparent;
+
+  path {
+    fill: #C3C0B8;
+  }
+}
+
+
+.steel {
+  background-color: #8F8E9E;
+}
+
+svg.steel {
+  background-color: transparent;
+
+  path {
+    fill: #8F8E9E;
+  }
+}
+
+
+.ice {
+  background-color: #9BDEFB;
+}
+
+svg.ice {
+  background-color: transparent;
+
+  path {
+    fill: #9BDEFB;
+  }
+}
+
+
+.dark {
+  background-color: #322C26;
+}
+
+svg.dark {
+  background-color: transparent;
+
+  path {
+    fill: #322C26;
+  }
+}
+
+
+.fighting {
+  background-color: #80311D;
+}
+
+svg.fighting {
+  background-color: transparent;
+
+  path {
+    fill: #80311D;
+  }
+}
+
+
+.grass {
+  background-color: #924694;
+}
+
+svg.grass {
+  background-color: transparent;
+
+  path {
+    fill: #924694;
+  }
+}
+
+
+.water {
+  background-color: #5D74D5;
+}
+
+svg.water {
+  background-color: transparent;
+
+  path {
+    fill: #5D74D5;
+  }
+}
+
+
+.dragon {
+  background-color: #6B57D2;
+}
+
+svg.dragon {
+  background-color: transparent;
+
+  path {
+    fill: #6B57D2;
+  }
+}
+
+
+.fire {
+  background-color: #EC5D35;
+}
+
+svg.fire {
+  background-color: transparent;
+
+  path {
+    fill: #EC5D35;
+  }
+}
+
+
+.ground {
+  background-color: #D0B155;
+}
+
+svg.ground {
+  background-color: transparent;
+
+  path {
+    fill: #D0B155;
+  }
+}
+
+
+.psychic {
+  background-color: #DA3063;
+}
+
+svg.psychic {
+  background-color: transparent;
+
+  path {
+    fill: #DA3063;
+  }
+}
+
+
+.eletric {
+  background-color: #F4CB38;
+}
+
+svg.eletric {
+  background-color: transparent;
+
+  path {
+    fill: #F4CB38;
+  }
+}
+
+
+.rock {
+  background-color: #9D853C;
+}
+
+svg.rock {
+  background-color: transparent;
+
+  path {
+    fill: #9D853C;
+  }
+}

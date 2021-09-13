@@ -6,6 +6,7 @@ import { PokemonTeam } from "../components/PokemonTeam";
 import { TeamOptions } from "../components/TeamOptions";
 
 import api from "../services/api";
+import Modal from 'react-modal';
 
 import { FaPen } from "react-icons/fa";
 import styles from "./teams.module.scss";
@@ -13,6 +14,7 @@ import styles from "./teams.module.scss";
 interface PokemonInterface {
   id: number;
   name: string;
+  types: any;
   onAddPokemonToTheTeam: (pokemon: any) => void;
 }
 
@@ -22,6 +24,10 @@ export default function Home() {
 
   // estado para armazenar equipes de pokemons
   const [pokemonsTeam, setPokemonsTeam] = useState<PokemonInterface[]>([]);
+
+  let subtitle: any;
+  const [modalIsOpen, setIsOpen] = useState(false);
+
 
   // ordenando os pokemons
   const OrderPokemons = (pokemons: any) =>
@@ -55,16 +61,44 @@ export default function Home() {
   }, []);
 
   function addPokemonsToTheTeam(pokemon: any) {
-    /* setToogle((pokemonClick) => !pokemonClick); */
-
     if (pokemonsTeam.length >= 6) return;
 
+    const checkIfPokemonAlreadyExist = pokemonsTeam.find(item => item.id === pokemon.id);
+
+    if(checkIfPokemonAlreadyExist) return;
+
     setPokemonsTeam([...pokemonsTeam, pokemon]);
-    console.log(pokemonsTeam)
   }
 
   let group = Array.from({ length: 6 });
 
+  function handleDeletePokemon() {
+    setPokemonsTeam([])
+  }
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function afterOpenModal() {
+    // references are now sync'd and can be accessed.
+    subtitle.style.color = '#f00';
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
+  const customStyles = {
+    content: {
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
+    },
+  };
 
   return (
     <>
@@ -76,8 +110,23 @@ export default function Home() {
         <section className={styles.section}>
           <div className={styles.sectionTitle}>
             <h2>My Team</h2>
-            <FaPen className={styles.sectionTitleIcon} />
+            <FaPen onClick={openModal} className={styles.sectionTitleIcon} />
           </div>
+
+          <Modal
+            isOpen={modalIsOpen}
+            onAfterOpen={afterOpenModal}
+            onRequestClose={closeModal}
+            style={customStyles}
+            contentLabel="Example Modal"
+          >
+            <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2>
+            <button onClick={closeModal}>close</button>
+            <div>I am a modal</div>
+            <form>
+              <input />
+            </form>
+          </Modal>
 
           <div className={styles.pokemonTeam}>
             <div className={styles.pokemonTeamRow}>
@@ -85,10 +134,22 @@ export default function Home() {
                 <PokemonTeam
                   index={pokemonsTeam[index]}
                   id={pokemonsTeam[index] ? pokemonsTeam[index].id : 0}
+                  // @ts-ignore
+                  pokemonType={pokemonsTeam[index] ? pokemonsTeam[index].types[0].type.name : ''}
                 />
-              ))}
+                ))}
             </div>
-            <TeamOptions />
+            { pokemonsTeam.length < 6 ? (
+              <TeamOptions
+                opacity={0.2}
+                onDeletePokemon={handleDeletePokemon}
+              />
+            ) : (
+              <TeamOptions
+                opacity={1}
+                onDeletePokemon={handleDeletePokemon}
+              />
+            ) }
           </div>
         </section>
 
@@ -99,11 +160,13 @@ export default function Home() {
 
           <div className={styles.pokemons}>
             <div className={styles.pokemonsRow}>
-              {pokemons.map((pokemon) => (
+              {pokemons.map((pokemon, index) => (
                 <PokemonItem
                   id={pokemon.id}
                   name={pokemon.name}
                   onAddPokemonToTheTeam={() => addPokemonsToTheTeam(pokemon)}
+                  pokemonTeam={pokemonsTeam}
+                  pokemonType={pokemon.types[0].type.name}
                 />
               ))}
             </div>

@@ -6,18 +6,30 @@
   color: $white;
   
   .trashIcon {
+    cursor: pointer;
     background-color: $red-error;
     border-radius: 100px;
     padding: 13px;
     display: flex;
     align-items: center;
+    transition: all .5s ease;
+
+    &:hover {
+      filter: brightness(1.5);
+    }
   }
 
   .checkIcon {
+    cursor: pointer;
     background-color: $green-sucess;
     border-radius: 100px;
     padding: 13px;
     display: flex;
     align-items: center;
+    transition: all .5s ease;
+
+    &:hover {
+      filter: brightness(1.5);
+    }
   }
 }
