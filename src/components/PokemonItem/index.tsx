@@ -33,7 +33,6 @@ export function PokemonItem({ id, name, pokemonTeam, onAddPokemonToTheTeam, poke
   return (
     <div
       onClick={handleClickPokemon}
-      key={id}
       className={`${styles.pokemonItem} animate__animated animate__fadeInDown`}
     >
       <div className={styles.pokemonId}>

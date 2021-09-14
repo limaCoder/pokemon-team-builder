@@ -138,6 +138,7 @@ export default function Home() {
                 <PokemonTeam
                   index={pokemonsTeam[index]}
                   id={pokemonsTeam[index] ? pokemonsTeam[index].id : 0}
+                  key={index}
                   pokemonType={pokemonsTeam[index] ? pokemonsTeam[index].types[0].type.name : ''}
                 />
                 ))}
@@ -165,6 +166,7 @@ export default function Home() {
             <div className={styles.pokemonsRow}>
               {pokemons.map((pokemon, index) => (
                 <PokemonItem
+                  key={pokemon.id}
                   id={pokemon.id}
                   name={pokemon.name}
                   onAddPokemonToTheTeam={() => addPokemonsToTheTeam(pokemon)}

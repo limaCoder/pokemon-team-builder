@@ -73,9 +73,10 @@ export default function Home() {
                 <PokemonTeam
                   index={pokemonsTeam[index]}
                   id={pokemonsTeam[index] ? pokemonsTeam[index].id : 0}
+                  key={index}
                   pokemonType={pokemonsTeam[index] ? pokemonsTeam[index].types[0].type.name : ''}
                 />
-                ))}
+              ))}
             </div>
           </div>
         </section>
