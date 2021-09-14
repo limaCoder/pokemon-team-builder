@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img alt="Pokemon Team Builder" title="todo" src="logo.png" />
+  <img width="50%" alt="Pokemon Team Builder" title="todo" src="logo.png" />
 </h1>
 
 <p align="center">
