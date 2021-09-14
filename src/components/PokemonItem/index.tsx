@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
+import "animate.css";
 import styles from "./styles.module.scss";
 import { FaCheck } from "react-icons/fa";
 
@@ -16,21 +17,24 @@ export function PokemonItem({ id, name, pokemonTeam, onAddPokemonToTheTeam, poke
   const [toogle, setToogle] = useState(false);
 
   const handleClickPokemon = () => {
-    if(pokemonTeam.length <= 6) {
-      setToogle(true)
-    } else {
-      setToogle(false)
-    }
+    
+    setToogle(true)
+    
+    if(pokemonTeam >= 6) setToogle(false)
 
     onAddPokemonToTheTeam()
     console.log(pokemonTeam)
   }
 
+  useEffect(() => {
+    if (pokemonTeam === 0) setToogle(false)
+  }, [pokemonTeam])
+
   return (
     <div
       onClick={handleClickPokemon}
       key={id}
-      className={styles.pokemonItem}
+      className={`${styles.pokemonItem} animate__animated animate__fadeInDown`}
     >
       <div className={styles.pokemonId}>
         <span>{id}</span>

@@ -1,4 +1,5 @@
 import styles from "./styles.module.scss";
+import "animate.css"
 
 interface PokemonTeamInterface {
   index: {};
@@ -16,9 +17,15 @@ export function PokemonTeam({ index, id, pokemonType }: PokemonTeamInterface) {
         <img src="pokeball-background-bottom.svg" alt="" />
 
         <div className={styles.pokemonInTeamPokeball}>
-          {index && (
+          {index ? (
             <img
-              className={styles.pokemonInTeamPokeballImage}
+              className={`${styles.pokemonInTeamPokeballImage} animate__animated animate__fadeInDown`}
+              src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`}
+              alt=""
+            />
+          ) : (
+            <img
+              className={`${styles.pokemonInTeamPokeballImage} animate__animated animate__fadeOutUp`}
               src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`}
               alt=""
             />

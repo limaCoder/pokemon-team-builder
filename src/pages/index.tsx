@@ -6,10 +6,11 @@ import { PokemonTeam } from "../components/PokemonTeam";
 import { TeamOptions } from "../components/TeamOptions";
 
 import api from "../services/api";
-import Modal from 'react-modal';
+import server from "../services/backend";
 
 import { FaPen } from "react-icons/fa";
 import styles from "./teams.module.scss";
+import { ModalComponent } from "../components/Modal";
 
 interface PokemonInterface {
   id: number;
@@ -25,9 +26,11 @@ export default function Home() {
   // estado para armazenar equipes de pokemons
   const [pokemonsTeam, setPokemonsTeam] = useState<PokemonInterface[]>([]);
 
-  let subtitle: any;
+  // estado para armazenar valor booeleano do modal, se está abertou não
   const [modalIsOpen, setIsOpen] = useState(false);
 
+  // estado para armazenar nome da equipe
+  const [teamName, setTeamName] = useState('')
 
   // ordenando os pokemons
   const OrderPokemons = (pokemons: any) =>
@@ -41,7 +44,7 @@ export default function Home() {
   // armazenando cada pokemon no estado de pokemons
   async function loadPokemons() {
     const pokemonsNames = await api
-      .get(`/pokemon`)
+      .get(`/pokemon?limit=151`)
       .then((response) => response.data.results);
 
     for (const pokemonName of pokemonsNames) {
@@ -60,6 +63,8 @@ export default function Home() {
     loadPokemons();
   }, []);
 
+
+  // função para adicionar pokémons a equipe
   function addPokemonsToTheTeam(pokemon: any) {
     if (pokemonsTeam.length >= 6) return;
 
@@ -79,26 +84,33 @@ export default function Home() {
   function openModal() {
     setIsOpen(true);
   }
-
-  function afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    subtitle.style.color = '#f00';
-  }
-
+  
   function closeModal() {
     setIsOpen(false);
   }
 
-  const customStyles = {
-    content: {
-      top: '50%',
-      left: '50%',
-      right: 'auto',
-      bottom: 'auto',
-      marginRight: '-50%',
-      transform: 'translate(-50%, -50%)',
-    },
-  };
+  function handleSubmit(e: any) {
+    e.preventDefault()
+    setIsOpen(false)
+  }
+
+  // função para enviar dados dos pokemons para o backend
+  async function sendPokemonData(e: any) {
+    e.preventDefault();
+
+    const pokemonsData  =  pokemonsTeam.map(pokemon => ( { id: pokemon.id, name: pokemon.name, type: pokemon.types[0].type.name } ))
+
+    const data = {teamName, pokemonsData}
+
+    console.log(data)
+
+    try {
+      const response = await server.post('/create-pokemons-team', JSON.stringify(data))
+    } catch (err) {
+      console.log(err)
+      alert('Erro ao enviar dados')
+    }
+  }
 
   return (
     <>
@@ -109,24 +121,16 @@ export default function Home() {
       <main className={styles.mainContainer}>
         <section className={styles.section}>
           <div className={styles.sectionTitle}>
-            <h2>My Team</h2>
+            <h2>{ teamName ? (teamName) : ('My Team') }</h2>
             <FaPen onClick={openModal} className={styles.sectionTitleIcon} />
           </div>
 
-          <Modal
-            isOpen={modalIsOpen}
-            onAfterOpen={afterOpenModal}
+          <ModalComponent 
+            isOpen={modalIsOpen} 
             onRequestClose={closeModal}
-            style={customStyles}
-            contentLabel="Example Modal"
-          >
-            <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2>
-            <button onClick={closeModal}>close</button>
-            <div>I am a modal</div>
-            <form>
-              <input />
-            </form>
-          </Modal>
+            onInputChangeModal={e => setTeamName(e.target.value)}
+            onSubmitModal={handleSubmit} 
+          />
 
           <div className={styles.pokemonTeam}>
             <div className={styles.pokemonTeamRow}>
@@ -134,7 +138,6 @@ export default function Home() {
                 <PokemonTeam
                   index={pokemonsTeam[index]}
                   id={pokemonsTeam[index] ? pokemonsTeam[index].id : 0}
-                  // @ts-ignore
                   pokemonType={pokemonsTeam[index] ? pokemonsTeam[index].types[0].type.name : ''}
                 />
                 ))}
@@ -142,12 +145,12 @@ export default function Home() {
             { pokemonsTeam.length < 6 ? (
               <TeamOptions
                 opacity={0.2}
-                onDeletePokemon={handleDeletePokemon}
               />
             ) : (
               <TeamOptions
                 opacity={1}
                 onDeletePokemon={handleDeletePokemon}
+                onSendPokemonData={sendPokemonData}
               />
             ) }
           </div>
@@ -165,10 +168,11 @@ export default function Home() {
                   id={pokemon.id}
                   name={pokemon.name}
                   onAddPokemonToTheTeam={() => addPokemonsToTheTeam(pokemon)}
-                  pokemonTeam={pokemonsTeam}
+                  pokemonTeam={pokemonsTeam.length}
                   pokemonType={pokemon.types[0].type.name}
                 />
               ))}
+              <div id="morePokemons"></div>
             </div>
           </div>
         </section>

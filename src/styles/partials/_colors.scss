@@ -114,10 +114,22 @@ svg.fighting {
 
 
 .grass {
-  background-color: #924694;
+  background-color: #68BB2B;
 }
 
 svg.grass {
+  background-color: transparent;
+
+  path {
+    fill: #68BB2B;
+  }
+}
+
+.poison {
+  background-color: #924694;
+}
+
+svg.poison {
   background-color: transparent;
 
   path {
@@ -191,11 +203,11 @@ svg.psychic {
 }
 
 
-.eletric {
+.electric {
   background-color: #F4CB38;
 }
 
-svg.eletric {
+svg.electric {
   background-color: transparent;
 
   path {
